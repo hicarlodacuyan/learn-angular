@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MenuItem } from './menu-item.model';
 
@@ -10,7 +11,10 @@ import { MenuItem } from './menu-item.model';
 export class SideNavComponent {
   @Input() menuItems: MenuItem[] = [];
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   onLogout() {
     this.authService
@@ -21,5 +25,9 @@ export class SideNavComponent {
       .catch((error) => {
         console.error('Logout error', error);
       });
+  }
+
+  isActive(link: string): boolean {
+    return this.router.url === link;
   }
 }

@@ -4,3 +4,15 @@
   height: 100dvh;
   padding: 1em;
 }
+
+@media (min-width: 768px) {
+  .app-container {
+    display: flex;
+    gap: 2em;
+  }
+
+  .main {
+    width: 100%;
+    padding: 1em;
+  }
+}

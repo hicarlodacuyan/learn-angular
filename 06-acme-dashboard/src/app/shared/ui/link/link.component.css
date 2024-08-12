@@ -10,6 +10,19 @@
   justify-content: center;
 }
 
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+}
+
+.nav-link.active {
+  background-color: #f0f0f0; /* Adjust this for highlighting */
+  font-weight: bold;
+}
+
 a {
   color: #ff0000;
 } /* Unvisited link  */

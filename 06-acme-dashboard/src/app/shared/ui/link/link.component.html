@@ -1,4 +1,8 @@
-<a class="link-button" [routerLink]="link">
+<a
+  class="link-button nav-link"
+  [ngClass]="{ active: active }"
+  [routerLink]="link"
+>
   <mat-icon
     class="logo-icon"
     aria-hidden="false"
