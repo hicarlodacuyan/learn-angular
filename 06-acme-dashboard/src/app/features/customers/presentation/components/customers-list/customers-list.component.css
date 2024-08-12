@@ -1,0 +1,79 @@
+/* Default styles for mobile view */
+.customers-table {
+  display: none;
+}
+
+.mobile-view {
+  display: block;
+}
+
+/* Style for the customer card */
+.customer-card {
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.customer-card-header {
+  display: flex;
+  align-items: center;
+}
+
+.customer-card-header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.customer-card-details {
+  margin-top: 16px;
+}
+
+.customer-card-details p {
+  margin: 4px 0;
+}
+
+th,
+td {
+  color: #000000;
+}
+
+.paginator {
+  margin-bottom: 1em;
+  border-radius: 5px;
+}
+
+/* Styles for large screens */
+@media (min-width: 768px) {
+  .customers-table {
+    display: table;
+    width: 100%;
+    margin: 16px 0;
+    background-color: #f9f9f9; /* Light mode background */
+    border-collapse: collapse;
+  }
+
+  .customers-table th.mat-header-cell {
+    background-color: #e0e0e0; /* Light mode header background */
+  }
+
+  .customers-table img.customer-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .picture-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+
+  .mobile-view {
+    display: none;
+  }
+}

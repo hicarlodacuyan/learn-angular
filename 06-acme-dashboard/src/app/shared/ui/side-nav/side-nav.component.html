@@ -1,0 +1,23 @@
+<div class="sidenav-container">
+  <div class="sidenav">
+    <app-logo></app-logo>
+    <div class="nav-list">
+      <div class="nav-list-menu">
+        <ng-container *ngFor="let item of menuItems">
+          <app-link
+            [link]="item.link"
+            [text]="item.text"
+            [icon]="item.icon"
+          ></app-link>
+        </ng-container>
+      </div>
+      <div class="filler-menu"></div>
+      <app-link
+        (click)="onLogout()"
+        link="/logout"
+        text="Logout"
+        icon="logout"
+      ></app-link>
+    </div>
+  </div>
+</div>

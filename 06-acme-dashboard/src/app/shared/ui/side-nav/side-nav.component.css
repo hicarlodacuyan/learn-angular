@@ -1,0 +1,62 @@
+.sidenav {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.nav-list {
+  list-style-type: none;
+  display: flex;
+  gap: 1em;
+}
+
+.nav-list-menu {
+  display: flex;
+  gap: 1em;
+  flex: 1;
+}
+
+.nav-list-menu * {
+  flex: 1;
+}
+
+.filler-menu {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidenav-container {
+    height: 100%;
+    width: 300px;
+  }
+
+  .logo {
+    padding: 1em 0.25em;
+  }
+
+  .sidenav {
+    height: 100%;
+  }
+
+  .nav-list {
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .nav-list-menu {
+    flex-direction: column;
+    justify-content: space-around;
+    gap: none;
+  }
+
+  .nav-list-menu * {
+    flex: none;
+  }
+
+  .filler-menu {
+    display: block;
+    flex: 2;
+    background-color: #f9fafb;
+    border-radius: 5px;
+  }
+}

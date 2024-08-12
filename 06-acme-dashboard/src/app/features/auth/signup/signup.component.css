@@ -1,0 +1,32 @@
+.signup-form-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  width: 90dvw;
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  text-align: center;
+}
+
+.divider {
+  margin: 0;
+  padding: 0;
+  color: gray;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    width: 360px;
+  }
+}

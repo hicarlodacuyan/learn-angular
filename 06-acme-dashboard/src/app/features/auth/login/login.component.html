@@ -1,0 +1,35 @@
+<div class="login-form-container">
+  <div class="main-container">
+    <app-logo></app-logo>
+    <mat-card class="auth-card">
+      <mat-card-content>
+        <form class="loginForm" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <mat-card-title>Login your account</mat-card-title>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+            <mat-error *ngIf="loginForm.get('email')!.invalid">
+              Email is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" />
+            <mat-error *ngIf="loginForm.get('password')!.invalid">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button type="submit">Login</button>
+          <p class="divider">OR</p>
+          <app-link
+            link="/signup"
+            text="Create an account"
+            icon="create"
+          ></app-link>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

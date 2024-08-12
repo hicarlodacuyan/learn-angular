@@ -1,0 +1,42 @@
+.link-button {
+  color: #000000 !important;
+  text-decoration: none;
+  padding: 1em;
+  background: #f9fafb;
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a {
+  color: #ff0000;
+} /* Unvisited link  */
+a:visited {
+  color: #00ff00;
+} /* Visited link    */
+a:hover {
+  color: #ff00ff;
+} /* Mouse over link */
+a:active {
+  color: #0000ff;
+} /* Selected link   */
+
+/* Hide text on small screens */
+@media (max-width: 768px) {
+  .link-text {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .link-button {
+    justify-content: flex-start;
+    gap: 1em;
+  }
+
+  .link-text {
+    font-size: 18px;
+  }
+}

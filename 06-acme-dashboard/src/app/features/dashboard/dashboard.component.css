@@ -1,0 +1,17 @@
+h1 {
+  font-family: "lusitana", serif;
+  margin-top: 2em;
+}
+
+@media (min-width: 768px) {
+  .dashboard-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    height: 100%;
+  }
+
+  .main {
+    width: 100%;
+  }
+}

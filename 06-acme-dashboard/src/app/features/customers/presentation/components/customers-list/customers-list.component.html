@@ -1,0 +1,82 @@
+<div class="customers-list-container">
+  <!-- Table View for Large Screens -->
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="customers-table"
+    *ngIf="dataSource.data.length > 0"
+  >
+    <!-- Combined Picture and Name Column -->
+    <ng-container matColumnDef="pictureAndName">
+      <th mat-header-cell *matHeaderCellDef>Picture & Name</th>
+      <td mat-cell *matCellDef="let customer">
+        <div class="picture-name-cell">
+          <img
+            [src]="customer.image_url"
+            alt="{{ customer.name }}"
+            class="customer-image"
+          />
+          <span class="customer-name">{{ customer.name }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let customer">{{ customer.email }}</td>
+    </ng-container>
+
+    <!-- Total Invoices Column -->
+    <ng-container matColumnDef="totalInvoices">
+      <th mat-header-cell *matHeaderCellDef>Total Invoices</th>
+      <td mat-cell *matCellDef="let customer">{{ customer.totalInvoices }}</td>
+    </ng-container>
+
+    <!-- Total Pending Column -->
+    <ng-container matColumnDef="totalPending">
+      <th mat-header-cell *matHeaderCellDef>Total Pending</th>
+      <td mat-cell *matCellDef="let customer">
+        &#8369;{{ customer.totalPending }}
+      </td>
+    </ng-container>
+
+    <!-- Total Paid Column -->
+    <ng-container matColumnDef="totalPaid">
+      <th mat-header-cell *matHeaderCellDef>Total Paid</th>
+      <td mat-cell *matCellDef="let customer">
+        &#8369;{{ customer.totalPaid }}
+      </td>
+    </ng-container>
+
+    <!-- Header Row -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!-- Data Row -->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- Card View for Small Screens -->
+  <div class="mobile-view" *ngIf="customers$ | async as customers">
+    <div *ngFor="let customer of customers" class="customer-card">
+      <div class="customer-card-header">
+        <img [src]="customer.image_url" alt="{{ customer.name }}" />
+        <div>
+          <p class="customer-name">{{ customer.name }}</p>
+          <p>{{ customer.email }}</p>
+        </div>
+      </div>
+      <div class="customer-card-details">
+        <p>Total Invoices: {{ customer.totalInvoices | currency }}</p>
+        <p>Total Pending: {{ customer.totalPending | currency }}</p>
+        <p>Total Paid: {{ customer.totalPaid | currency }}</p>
+      </div>
+    </div>
+  </div>
+
+  <mat-paginator
+    [pageSize]="pageSize"
+    [length]="totalCustomers"
+    (page)="onPageChange($event)"
+    class="paginator"
+  ></mat-paginator>
+</div>
