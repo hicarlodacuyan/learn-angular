@@ -2,7 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DocumentData } from '@angular/fire/compat/firestore';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, of } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+} from 'rxjs';
 import { Customer } from '../../../domain/models/customer.model';
 import { GetCustomersUseCase } from '../../../domain/use-cases/get-customers.use-case';
 
@@ -25,6 +33,8 @@ export class CustomersListComponent implements OnInit {
   pageSize = 5;
   currentPageIndex = 0;
   private lastDocument: DocumentData | undefined = undefined;
+  private searchSubject: Subject<string> = new Subject<string>();
+  private searchTerm: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -32,35 +42,47 @@ export class CustomersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCustomers();
+
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((term) => {
+          this.searchTerm = term;
+          if (term) {
+            return this.searchCustomers(term);
+          } else {
+            this.currentPageIndex = 0; // Reset pagination index
+            return this.getPaginatedCustomers(); // Load paginated data if search term is empty
+          }
+        }),
+      )
+      .subscribe({
+        next: (customers) => {
+          this.customers$ = of(customers);
+          this.dataSource.data = customers;
+        },
+        error: (error) => {
+          console.error('Error during search or pagination:', error);
+        },
+      });
   }
 
   loadCustomers(startAfter?: DocumentData): void {
-    console.log('Loading customers with startAfter:', startAfter);
-
     this.getCustomersUseCase.execute(this.pageSize, startAfter).subscribe({
       next: ({ customers, total }) => {
-        console.log('Received customers:', customers);
-        console.log('Total customers:', total);
-
-        // Check if we received customers
         if (customers.length > 0) {
-          this.dataSource.data = customers;
           this.customers$ = of(customers);
+          this.dataSource.data = customers;
           this.totalCustomers = total;
-
-          // Update lastDocument for pagination
           this.lastDocument = customers[customers.length - 1];
-
-          // Update the paginator state
           if (this.paginator) {
             this.paginator.pageIndex = this.currentPageIndex;
             this.paginator.pageSize = this.pageSize;
           }
-
-          console.log('Updated lastDocument:', this.lastDocument);
         } else {
-          console.log('No more data available for pagination.');
           this.lastDocument = undefined;
+          this.customers$ = of([]);
           this.dataSource.data = [];
         }
       },
@@ -70,18 +92,46 @@ export class CustomersListComponent implements OnInit {
     });
   }
 
-  onPageChange(event: PageEvent): void {
-    console.log('Page changed:', event);
+  searchCustomers(term: string): Observable<Customer[]> {
+    return this.getCustomersUseCase.searchCustomers(term).pipe(
+      map((customers) => {
+        this.totalCustomers = customers.length;
+        if (this.paginator) {
+          this.paginator.pageIndex = 0;
+          this.paginator.pageSize = customers.length;
+        }
+        return customers;
+      }),
+    );
+  }
 
-    this.currentPageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-
-    // Calculate the startAfter document
+  getPaginatedCustomers(): Observable<Customer[]> {
     const startAfter =
       this.currentPageIndex > 0 ? this.lastDocument : undefined;
 
-    console.log('Fetching data with startAfter:', startAfter);
+    return new Observable<Customer[]>((observer) => {
+      this.loadCustomers(startAfter);
+      this.customers$.subscribe((customers) => observer.next(customers));
+    });
+  }
 
-    this.loadCustomers(startAfter);
+  onPageChange(event: PageEvent): void {
+    this.currentPageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    if (this.searchTerm) {
+      this.searchCustomers(this.searchTerm).subscribe((customers) => {
+        this.customers$ = of(customers);
+        this.dataSource.data = customers;
+      });
+    } else {
+      this.getPaginatedCustomers().subscribe((customers) => {
+        this.customers$ = of(customers);
+        this.dataSource.data = customers;
+      });
+    }
+  }
+
+  onSearch(searchTerm: string): void {
+    this.searchSubject.next(searchTerm);
   }
 }

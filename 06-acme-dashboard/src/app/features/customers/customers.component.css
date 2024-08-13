@@ -1,3 +1,7 @@
+.customers-container {
+  padding: 1em;
+}
+
 h1 {
   font-family: "lusitana", serif;
   margin-top: 2em;
@@ -6,5 +10,6 @@ h1 {
 @media (min-width: 768px) {
   .customers-container {
     width: 100%;
+    padding: 0;
   }
 }

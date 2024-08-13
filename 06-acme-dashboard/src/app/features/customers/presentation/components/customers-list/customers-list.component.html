@@ -3,7 +3,7 @@
   <table
     mat-table
     [dataSource]="dataSource"
-    class="customers-table"
+    class="customers-table mat-elevation-z1"
     *ngIf="dataSource.data.length > 0"
   >
     <!-- Combined Picture and Name Column -->
@@ -56,27 +56,37 @@
   </table>
 
   <!-- Card View for Small Screens -->
+  <app-search
+    (search)="onSearch($event)"
+    [placeholder]="'Search by email'"
+  ></app-search>
   <div class="mobile-view" *ngIf="customers$ | async as customers">
     <div *ngFor="let customer of customers" class="customer-card">
       <div class="customer-card-header">
-        <img [src]="customer.image_url" alt="{{ customer.name }}" />
-        <div>
+        <div class="customer-card-header-details">
+          <img [src]="customer.image_url" alt="{{ customer.name }}" />
           <p class="customer-name">{{ customer.name }}</p>
-          <p>{{ customer.email }}</p>
         </div>
+        <p class="customer-email">{{ customer.email }}</p>
       </div>
-      <div class="customer-card-details">
-        <p>Total Invoices: {{ customer.totalInvoices | currency }}</p>
-        <p>Total Pending: {{ customer.totalPending | currency }}</p>
-        <p>Total Paid: {{ customer.totalPaid | currency }}</p>
+      <div class="customer-card-body">
+        <p class="pending">
+          Pending <span>{{ customer.totalPending | currency }}</span>
+        </p>
+        <p class="paid">
+          Paid <span>{{ customer.totalPaid | currency }}</span>
+        </p>
+      </div>
+      <div class="customer-card-footer">
+        <p class="total">{{ customer.totalInvoices }} invoices</p>
       </div>
     </div>
   </div>
-
-  <mat-paginator
-    [pageSize]="pageSize"
-    [length]="totalCustomers"
-    (page)="onPageChange($event)"
-    class="paginator"
-  ></mat-paginator>
 </div>
+
+<mat-paginator
+  [pageSize]="pageSize"
+  [length]="totalCustomers"
+  (page)="onPageChange($event)"
+  class="paginator"
+></mat-paginator>

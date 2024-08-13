@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   DocumentData,
+  DocumentReference,
   QuerySnapshot,
 } from '@angular/fire/compat/firestore';
-import { combineLatest, map, Observable, switchMap } from 'rxjs';
+import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
 import { Customer } from '../../domain/models/customer.model';
 import { Invoice } from '../../domain/models/invoice.model';
 
@@ -28,6 +29,10 @@ export class CustomersService {
     limit: number,
     startAfter?: DocumentData,
   ): Observable<QuerySnapshot<DocumentData>> {
+    console.log(
+      'Receiving startAfter from service with id: ',
+      startAfter?.['id'],
+    );
     return this.getDocumentSnapshot(startAfter?.['id']).pipe(
       switchMap((docSnapshot) => {
         const query = this.firestore
@@ -45,12 +50,67 @@ export class CustomersService {
     );
   }
 
-  getInvoices(): Observable<Invoice[]> {
+  searchCustomers(searchTerm: string): Observable<Customer[]> {
     return this.firestore
-      .collection<Invoice>('invoices')
+      .collection<Customer>('customers', (ref) =>
+        ref
+          .where('email', '>=', searchTerm)
+          .where('email', '<=', searchTerm + '\uf8ff'),
+      )
+      .snapshotChanges()
+      .pipe(
+        switchMap((actions) => {
+          const customers = actions.map((a) => {
+            const customerData = a.payload.doc.data() as Customer;
+            const customerRef = a.payload.doc.ref;
+            return { ref: customerRef, ...customerData };
+          });
+
+          if (customers.length === 0) {
+            return of([]);
+          }
+
+          const customersWithInvoices$ = customers.map((customer) =>
+            this.getInvoices(customer.ref).pipe(
+              map((invoices) => {
+                const totalInvoicesCount = invoices.length;
+                const totalPendingAmount = invoices
+                  .filter((invoice) => invoice.status === 'pending')
+                  .reduce((sum, invoice) => sum + invoice.amount, 0);
+                const totalPaidAmount = invoices
+                  .filter((invoice) => invoice.status === 'paid')
+                  .reduce((sum, invoice) => sum + invoice.amount, 0);
+
+                return {
+                  ...customer,
+                  totalInvoices: totalInvoicesCount,
+                  totalPending: totalPendingAmount,
+                  totalPaid: totalPaidAmount,
+                };
+              }),
+            ),
+          );
+
+          return combineLatest(customersWithInvoices$);
+        }),
+      );
+  }
+
+  getInvoices(customerRef?: DocumentReference): Observable<Invoice[]> {
+    if (!customerRef) {
+      return this.firestore
+        .collection<Invoice>('invoices')
+        .valueChanges({ idField: 'id' });
+    }
+
+    return this.firestore
+      .collection<Invoice>('invoices', (ref) =>
+        ref.where('customer_id', '==', customerRef),
+      )
       .valueChanges({ idField: 'id' });
   }
 
+  //TODO: Refactor this method to use a single query to get customers invoice data
   getCustomersWithInvoiceData(
     limit: number,
     startAfter?: DocumentData,
@@ -91,6 +151,48 @@ export class CustomersService {
       }),
     );
   }
+
+  //getCustomersWithInvoiceData(
+  //  limit: number,
+  //  startAfter?: DocumentData,
+  //): Observable<Customer[]> {
+  //  return this.getCustomers(limit, startAfter).pipe(
+  //    switchMap((customersSnapshot) => {
+  //      const customers = customersSnapshot.docs.map((doc) => {
+  //        const customerData = doc.data() as Customer;
+  //        const customerRef = doc.ref;
+  //        return { ref: customerRef, ...customerData };
+  //      });
+  //
+  //      if (customers.length === 0) {
+  //        return of([]);
+  //      }
+  //
+  //      const customersWithInvoices$ = customers.map((customer) =>
+  //        this.getInvoices(customer.ref).pipe(
+  //          map((invoices) => {
+  //            const totalInvoicesCount = invoices.length;
+  //            const totalPendingAmount = invoices
+  //              .filter((invoice) => invoice.status === 'pending')
+  //              .reduce((sum, invoice) => sum + invoice.amount, 0);
+  //            const totalPaidAmount = invoices
+  //              .filter((invoice) => invoice.status === 'paid')
+  //              .reduce((sum, invoice) => sum + invoice.amount, 0);
+  //
+  //            return {
+  //              ...customer,
+  //              totalInvoices: totalInvoicesCount,
+  //              totalPending: totalPendingAmount,
+  //              totalPaid: totalPaidAmount,
+  //            };
+  //          }),
+  //        ),
+  //      );
+  //
+  //      return combineLatest(customersWithInvoices$);
+  //    }),
+  //  );
+  //}
 
   getCustomersCount(): Observable<number> {
     return this.firestore

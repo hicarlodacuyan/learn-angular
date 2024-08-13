@@ -1,79 +1,96 @@
-/* Default styles for mobile view */
+.mobile-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  background: #f9fafb;
+  border-radius: 5px;
+  padding: 0.5em;
+}
+
 .customers-table {
   display: none;
 }
 
-.mobile-view {
-  display: block;
+.customer-card {
+  background: #ffffff;
+  padding: 1em;
+  border-radius: 5px;
 }
 
-/* Style for the customer card */
-.customer-card {
-  margin-bottom: 16px;
-  padding: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
+.customer-card-header,
+.customer-card-body {
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .customer-card-header {
   display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding-bottom: 1em;
+}
+
+.customer-card-header-details {
+  display: flex;
+  gap: 1em;
   align-items: center;
 }
 
-.customer-card-header img {
-  width: 40px;
-  height: 40px;
+.customer-name {
+  padding: 0;
+  margin: 0;
+}
+
+.customer-email {
+  color: gray;
+}
+
+img {
+  width: 28px;
   border-radius: 50%;
-  margin-right: 12px;
 }
 
-.customer-card-details {
-  margin-top: 16px;
+.customer-card-body {
+  display: flex;
+  align-items: center;
+  padding: 2em 0;
 }
 
-.customer-card-details p {
-  margin: 4px 0;
+.pending,
+.paid {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-size: 12px;
 }
 
-th,
-td {
-  color: #000000;
+.customer-card-footer {
+  padding-top: 1em;
+}
+
+span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+p {
+  padding: 0;
+  margin: 0;
 }
 
 .paginator {
-  margin-bottom: 1em;
-  border-radius: 5px;
+  font-size: 10px;
 }
 
-/* Styles for large screens */
 @media (min-width: 768px) {
-  .customers-table {
-    display: table;
-    width: 100%;
-    margin: 16px 0;
-    background-color: #f9f9f9; /* Light mode background */
-    border-collapse: collapse;
-  }
-
-  .customers-table th.mat-header-cell {
-    background-color: #e0e0e0; /* Light mode header background */
-  }
-
-  .customers-table img.customer-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 8px;
-  }
-
-  .picture-name-cell {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-  }
-
   .mobile-view {
     display: none;
+  }
+
+  .customers-table {
+    display: table;
+  }
+
+  .paginator {
+    margin-top: 20px;
   }
 }

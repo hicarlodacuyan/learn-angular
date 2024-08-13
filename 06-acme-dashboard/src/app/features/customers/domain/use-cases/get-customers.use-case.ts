@@ -19,4 +19,8 @@ export class GetCustomersUseCase {
       this.customersService.getCustomersCount(),
     ]).pipe(map(([customers, total]) => ({ customers, total })));
   }
+
+  searchCustomers(term: string): Observable<Customer[]> {
+    return this.customersService.searchCustomers(term);
+  }
 }

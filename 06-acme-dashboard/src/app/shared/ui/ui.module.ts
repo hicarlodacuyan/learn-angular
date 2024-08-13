@@ -6,10 +6,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 import { LinkComponent } from './link/link.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { LogoComponent } from './logo/logo.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { LogoComponent } from './logo/logo.component';
     SideNavComponent,
     PaginatorComponent,
     LogoComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,
@@ -24,6 +27,7 @@ import { LogoComponent } from './logo/logo.component';
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    MatInputModule,
     MatPaginatorModule,
     RouterModule,
   ],
@@ -32,9 +36,11 @@ import { LogoComponent } from './logo/logo.component';
     SideNavComponent,
     PaginatorComponent,
     LogoComponent,
+    SearchComponent,
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
+    MatInputModule,
     MatIconModule,
     RouterModule,
   ],
