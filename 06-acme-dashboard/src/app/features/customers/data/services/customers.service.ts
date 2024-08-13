@@ -130,10 +130,7 @@ export class CustomersService {
           const customerInvoices = invoices.filter(
             (invoice) => invoice.customer_id.path === customerRef,
           );
-          const totalInvoicesAmount = customerInvoices.reduce(
-            (sum, invoice) => sum + invoice.amount,
-            0,
-          );
+          const totalInvoicesCount = customerInvoices.length;
           const totalPendingAmount = customerInvoices
             .filter((invoice) => invoice.status === 'pending')
             .reduce((sum, invoice) => sum + invoice.amount, 0);
@@ -143,7 +140,7 @@ export class CustomersService {
 
           return {
             ...customer,
-            totalInvoices: totalInvoicesAmount,
+            totalInvoices: totalInvoicesCount,
             totalPending: totalPendingAmount,
             totalPaid: totalPaidAmount,
           };
