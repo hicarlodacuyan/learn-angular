@@ -10,4 +10,5 @@ export class LinkComponent {
   @Input() text!: string;
   @Input() icon!: string;
   @Input() active!: boolean;
+  @Input() iconOnly: boolean = false;
 }

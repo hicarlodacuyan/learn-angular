@@ -9,5 +9,5 @@
     aria-label="logo"
     [fontIcon]="icon"
   ></mat-icon>
-  <span class="link-text">{{ text }}</span>
+  <span [ngClass]="{ 'link-text': iconOnly }">{{ text }}</span>
 </a>
