@@ -1,3 +1,117 @@
 <div class="dashboard-container">
   <h1>Dashboard</h1>
+  <!--TODO: Extract into it's own component-->
+  <div class="summary-card">
+    <div class="summary-card-header">
+      <mat-icon
+        class="summary-card-icon"
+        aria-hidden="false"
+        aria-label="Example card icon"
+        fontIcon="schedule"
+      ></mat-icon>
+      <span class="summary-card-label">Collected</span>
+    </div>
+    <div class="summary-card-body">
+      <span class="summary-info">{{ 552.25 | currency }}</span>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-card-header">
+      <mat-icon
+        class="summary-card-icon"
+        aria-hidden="false"
+        aria-label="Example card icon"
+        fontIcon="payments"
+      ></mat-icon>
+      <span class="summary-card-label">Pending</span>
+    </div>
+    <div class="summary-card-body">
+      <span class="summary-info">{{ 486.88 | currency }}</span>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-card-header">
+      <mat-icon
+        class="summary-card-icon"
+        aria-hidden="false"
+        aria-label="Example card icon"
+        fontIcon="storage"
+      ></mat-icon>
+
+      <span class="summary-card-label">Total Invoices</span>
+    </div>
+    <div class="summary-card-body">
+      <span class="summary-info">{{ 11 }}</span>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-card-header">
+      <mat-icon
+        class="summary-card-icon"
+        aria-hidden="false"
+        aria-label="Example card icon"
+        fontIcon="groups"
+      ></mat-icon>
+      <span class="summary-card-label">Total Customers</span>
+    </div>
+    <div class="summary-card-body">
+      <span class="summary-info">{{ 10 }}</span>
+    </div>
+  </div>
+
+  <h1>Recent Revenue</h1>
+  <!--Bar chart-->
+  <div class="chart-container">
+    <div class="chart-body">
+      <div class="chart-item chart-item-1">
+        <span class="bar"></span>
+        <span class="text">Jan</span>
+      </div>
+      <div class="chart-item chart-item-2">
+        <span class="bar"></span> <span class="text">Feb</span>
+      </div>
+      <div class="chart-item chart-item-3">
+        <span class="bar"></span> <span class="text">Mar</span>
+      </div>
+      <div class="chart-item chart-item-4">
+        <span class="bar"></span> <span class="text">Apr</span>
+      </div>
+      <div class="chart-item chart-item-5">
+        <span class="bar"></span> <span class="text">May</span>
+      </div>
+      <div class="chart-item chart-item-6">
+        <span class="bar"></span> <span class="text">Jun</span>
+      </div>
+      <div class="chart-item chart-item-7">
+        <span class="bar"></span> <span class="text">Jul</span>
+      </div>
+      <div class="chart-item chart-item-8">
+        <span class="bar"></span> <span class="text">Aug</span>
+      </div>
+      <div class="chart-item chart-item-9">
+        <span class="bar"></span> <span class="text">Sep</span>
+      </div>
+      <div class="chart-item chart-item-10">
+        <span class="bar"></span> <span class="text">Oct</span>
+      </div>
+      <div class="chart-item chart-item-11">
+        <span class="bar"></span> <span class="text">Nov</span>
+      </div>
+      <div class="chart-item chart-item-12">
+        <span class="bar"></span> <span class="text">Dec</span>
+      </div>
+    </div>
+    <div class="chart-footer">
+      <mat-icon
+        class="chart-icon"
+        aria-hidden="false"
+        aria-label="Example card icon"
+        fontIcon="calendar_today"
+      ></mat-icon>
+      <span class="chart-label">Last 12 months</span>
+    </div>
+  </div>
 </div>
