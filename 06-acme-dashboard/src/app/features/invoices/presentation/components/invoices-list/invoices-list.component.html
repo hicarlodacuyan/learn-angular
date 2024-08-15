@@ -1,0 +1,88 @@
+<div class="invoices-list-container">
+  <app-search
+    (search)="onSearch($event)"
+    [placeholder]="'Search by email'"
+  ></app-search>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="invoices-table mat-elevation-z1"
+    *ngIf="dataSource.data.length > 0"
+  >
+    <ng-container matColumnDef="pictureAndName">
+      <th mat-header-cell *matHeaderCellDef>Picture & Name</th>
+      <td mat-cell *matCellDef="let invoice">
+        <div class="picture-name-cell">
+          <img
+            [src]="invoice.customer.image_url"
+            alt="{{ invoice.customer.name }}"
+            class="customer-image"
+          />
+          <span class="customer-name">{{ invoice.customer.name }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let invoice">{{ invoice.customer.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let invoice">
+        {{ invoice.amount | currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let invoice">
+        {{ invoice.date | timestampToDate | date }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let invoice">
+        <app-status-chip [status]="invoice.status"></app-status-chip>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <div class="mobile-view" *ngIf="invoices$ | async as invoices">
+    <div class="invoice-card" *ngFor="let invoice of invoices">
+      <div class="invoice-card-header">
+        <div class="invoice-card-header-container">
+          <div class="invoice-card-header-details">
+            <img
+              [src]="invoice.customer.image_url"
+              alt="{{ invoice.customer.name }}"
+            />
+            <p class="customer-name">{{ invoice.customer.name }}</p>
+          </div>
+          <p class="customer-email">{{ invoice.customer.email }}</p>
+        </div>
+        <app-status-chip [status]="invoice.status"></app-status-chip>
+      </div>
+      <div class="invoice-card-body">
+        <p class="amount">
+          {{ invoice.amount | currency }}
+        </p>
+        <p class="date">
+          {{ invoice.date | timestampToDate | date }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-paginator
+  [pageSize]="pageSize"
+  [length]="totalInvoices"
+  (page)="onPageChange($event)"
+  class="paginator"
+></mat-paginator>

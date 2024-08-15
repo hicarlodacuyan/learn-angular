@@ -1,0 +1,9 @@
+mat-chip.primary {
+  background-color: #4caf50;
+  color: white;
+}
+
+mat-chip.warn {
+  background-color: #f3f4f6;
+  color: gray;
+}

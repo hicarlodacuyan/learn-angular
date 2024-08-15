@@ -1,3 +1,7 @@
+.invoices-container {
+  padding: 1em;
+}
+
 h1 {
   font-family: "lusitana", serif;
   margin-top: 2em;
@@ -5,13 +9,7 @@ h1 {
 
 @media (min-width: 768px) {
   .invoices-container {
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-    height: 100%;
-  }
-
-  .main {
     width: 100%;
+    padding: 0;
   }
 }

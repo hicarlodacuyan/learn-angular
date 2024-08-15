@@ -1,4 +1,9 @@
 <div class="customers-list-container">
+  <app-search
+    (search)="onSearch($event)"
+    [placeholder]="'Search by email'"
+  ></app-search>
+
   <!-- Table View for Large Screens -->
   <table
     mat-table
@@ -56,10 +61,6 @@
   </table>
 
   <!-- Card View for Small Screens -->
-  <app-search
-    (search)="onSearch($event)"
-    [placeholder]="'Search by email'"
-  ></app-search>
   <div class="mobile-view" *ngIf="customers$ | async as customers">
     <div *ngFor="let customer of customers" class="customer-card">
       <div class="customer-card-header">

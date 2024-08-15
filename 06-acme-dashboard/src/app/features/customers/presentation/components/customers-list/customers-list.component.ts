@@ -52,8 +52,8 @@ export class CustomersListComponent implements OnInit {
           if (term) {
             return this.searchCustomers(term);
           } else {
-            this.currentPageIndex = 0; // Reset pagination index
-            return this.getPaginatedCustomers(); // Load paginated data if search term is empty
+            this.currentPageIndex = 0;
+            return this.getPaginatedCustomers();
           }
         }),
       )

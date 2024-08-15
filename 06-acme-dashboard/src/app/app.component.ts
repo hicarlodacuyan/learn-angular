@@ -13,8 +13,8 @@ export class AppComponent {
   showSideNav = true;
   menuItems: MenuItem[] = [
     { link: '/dashboard', text: 'Home', icon: 'home' },
-    { link: '/customers', text: 'Customers', icon: 'people' },
     { link: '/invoices', text: 'Invoices', icon: 'receipt' },
+    { link: '/customers', text: 'Customers', icon: 'people' },
   ];
 
   constructor(private router: Router) {

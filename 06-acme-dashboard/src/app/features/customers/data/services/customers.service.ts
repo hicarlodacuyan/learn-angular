@@ -29,15 +29,11 @@ export class CustomersService {
     limit: number,
     startAfter?: DocumentData,
   ): Observable<QuerySnapshot<DocumentData>> {
-    console.log(
-      'Receiving startAfter from service with id: ',
-      startAfter?.['id'],
-    );
     return this.getDocumentSnapshot(startAfter?.['id']).pipe(
       switchMap((docSnapshot) => {
         const query = this.firestore
           .collection<DocumentData>('customers', (ref) => {
-            let q = ref.orderBy('name').limit(limit);
+            const q = ref.orderBy('name').limit(limit);
             if (docSnapshot) {
               return q.startAfter(docSnapshot);
             }
