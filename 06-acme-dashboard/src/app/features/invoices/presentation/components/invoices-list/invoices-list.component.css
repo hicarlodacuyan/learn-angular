@@ -1,3 +1,8 @@
+.invoices-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .mobile-view {
   display: flex;
   flex-direction: column;
@@ -5,6 +10,19 @@
   background: #f9fafb;
   border-radius: 5px;
   padding: 0.5em;
+}
+
+.invoices-actions-container {
+  display: flex;
+  gap: 0.5em;
+}
+
+.search-bar-container {
+  flex: 1;
+}
+
+.new-invoice-button-container {
+  display: flex;
 }
 
 .invoices-table {

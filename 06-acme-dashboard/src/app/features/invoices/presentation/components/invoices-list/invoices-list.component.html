@@ -1,8 +1,22 @@
 <div class="invoices-list-container">
-  <app-search
-    (search)="onSearch($event)"
-    [placeholder]="'Search by email'"
-  ></app-search>
+  <div class="invoices-actions-container">
+    <div class="search-bar-container">
+      <app-search
+        class="search-bar"
+        (search)="onSearch($event)"
+        [placeholder]="'Search by email'"
+      ></app-search>
+    </div>
+    <div class="new-invoice-button-container">
+      <app-link
+        link="/invoices/create"
+        text="New Invoice"
+        icon="add"
+        [iconOnly]="true"
+        class="new-invoice-button"
+      ></app-link>
+    </div>
+  </div>
   <table
     mat-table
     [dataSource]="dataSource"

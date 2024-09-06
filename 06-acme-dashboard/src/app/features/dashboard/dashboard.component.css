@@ -74,6 +74,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   width: 50%;
+  text-align: center;
 }
 
 .chart-item-1 {

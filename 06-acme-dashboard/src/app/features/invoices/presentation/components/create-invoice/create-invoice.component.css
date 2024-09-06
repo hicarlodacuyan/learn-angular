@@ -1,0 +1,36 @@
+.create-invoice-container {
+  padding: 1em;
+}
+
+h1 {
+  font-family: "lusitana", serif;
+  margin-top: 2em;
+}
+
+.create-invoice {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.create-invoice-form {
+  display: flex;
+  flex-direction: column;
+
+  background: #f9fafb;
+  padding: 2em;
+  border-radius: 10px;
+}
+
+.create-invoice-actions {
+  display: flex;
+  gap: 1em;
+  justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+  .create-invoice-container {
+    width: 100%;
+    padding: 0;
+  }
+}
